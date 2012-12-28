@@ -33,12 +33,12 @@ Our goal is to be able to develop web applications by assembling components into
 Consider a simple web2py app "test" that extends the default scaffolding app with a custom model in file "models/db_comments.py":
 
 ``
-db.define_table('comment',
+db.define_table('comments',
    Field('body','text',label='Your comment'),
    Field('posted_on','datetime',default=request.now),
    Field('posted_by',db.auth_user,default=auth.user_id))
-db.comment.posted_on.writable=db.comment.posted_on.readable=False
-db.comment.posted_by.writable=db.comment.posted_by.readable=False
+db.comments.posted_on.writable=db.comments.posted_on.readable=False
+db.comments.posted_by.writable=db.comments.posted_by.readable=False
 ``:code
 
 one action in "controllers/comments.py"
@@ -46,8 +46,8 @@ one action in "controllers/comments.py"
 ``
 @auth.requires_login()
 def post():
-    return dict(form=SQLFORM(db.comment).process(),
-                comments=db(db.comment).select())
+    return dict(form=SQLFORM(db.comments).process(),
+                comments=db(db.comments).select())
 ``:code
 
 and the corresponding "views/comments/post.html"
